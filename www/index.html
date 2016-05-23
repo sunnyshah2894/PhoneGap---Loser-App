@@ -1,0 +1,204 @@
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8"></meta>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+            <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+            <link rel="stylesheet" href="css/bootstrap.min.css"></link>
+            <link rel="stylesheet" href="css/font-awesome.min.css"></link>
+            <link rel="stylesheet" href="css/main.css"></link>
+        </head>
+        <body>
+            <div id="container">
+                <div class="row container" style="padding-top:10px; margin:0px;">
+                    <div class="col-xs-3" style="margin-left: -18px;">
+                        <button class="btn back-btn btn-info btn-lg" type="button" onclick="click_back()">
+                            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+
+                             Back
+                                                
+
+                        </button>
+                    </div>
+                </div>
+                <div class="page-header text-center">
+                    <h1 style="margin:0px !important;" class="target">
+
+                        
+
+                    </h1>
+                </div>
+                <div class="container">
+                    <div class="circle text-center ">
+                        <h1 class="score" style="padding-top:30px;">
+
+                             0
+
+                        </h1>
+                    </div>
+                </div>
+                <div class="container text-center">
+                    <div class=" bring-center comp-data alert alert-info" role="alert">Common Start Playing </div>
+                </div>
+                
+                <br>
+                
+               <!-- Modal -->
+                <div class="modal fade" id="modalforcomputer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Computer Wins</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+                          HeHe!! You See That Computer Always Wins!!!
+                          
+                      </div>
+                      <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-primary" onclick="click_back()">Play Again!!</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="container">
+                    
+                    <div class="bring-center text-center">
+                        
+                        <button type="button" id="1" class="btn enter col-xs-4 btn-success btn-lg">1</button>
+                        <button type="button" id="2" class="btn enter col-xs-4 btn-success btn-lg">2</button>
+                        <button type="button" id="3" class="btn enter col-xs-4 btn-success btn-lg">3</button>
+                    </div>
+                    <div class="bring-center text-center">
+                        <button type="button" id="4" class="btn enter col-xs-4 btn-success btn-lg">4</button>
+                        <button type="button" id="5" class="btn enter col-xs-4 btn-success btn-lg">5</button>
+                        <button type="button" id="6" class="btn enter col-xs-4 btn-success btn-lg">6</button>
+                    </div>
+                    <div class="bring-center text-center">
+                        <button type="button" id="7" class="btn enter col-xs-4 btn-success btn-lg">7</button>
+                        <button type="button" id="8" class="btn enter col-xs-4 btn-success btn-lg">8</button>
+                        <button type="button" id="9" class="btn enter col-xs-4 btn-success btn-lg">9</button>
+                    </div>
+                    <div class="bring-center text-center">
+                        <button type="button" id="10" class="btn enter col-xs-4 btn-success btn-lg" style="margin-left: 96px;">10</button>
+                    </div>
+                    
+                
+                </div>   
+                
+            </div>
+            <!--
+
+            end of container 
+
+            -->
+            <script src="js/jquery-1.10.2.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script>
+                 
+                
+                
+                function click_back(){
+                        
+                        window.location.replace("./index.html");
+                        
+                    }
+            $(function(){
+                
+                    
+                
+                    var value_target = Math.floor((Math.random() * 100) + 1) ; 
+                    var target = $('.target') ; 
+                    var comps = $( '.comp-data' ); 
+                    var str = "Make "+  value_target + " and Win!!" ; 
+                    target.html( str ) ;
+                
+                    var ar = [] ; 
+                    var temp = value_target ; 
+                    var no = 0 ;
+                    while( parseInt(temp) > 0 ){
+                        
+                        ar.push(parseInt(temp)) ; 
+                        //alert(ar[ i++ ]) ; 
+                        no++ ; 
+                        temp = parseInt(temp) - 11 ;
+                        
+                    }
+                    
+                
+                    
+                    
+                     $('.enter').click(function(){
+
+                        $('.enter').attr("disabled", "true");
+
+                        $('.score').html( parseInt( $('.score').html() )+parseInt( this.id) ) ;
+                         
+                        
+                         comps.fadeOut(000) ; 
+                        if(  parseInt( $('.score').html() ) == value_target  )
+                           comps.html( "You Won BC!" ); 
+                         
+                        if( !computerturn() ) 
+                            $( '.enter' ).removeAttr('disabled');
+                        comps.fadeIn(1000);
+                             
+                    }) ; 
+
+                    function computerturn(){
+                            
+                            var score = parseInt( $('.score').html() ) ; 
+                            var i = 0  ;
+                            
+                            if( value_target - score < 10 ){
+                                
+                                $( '.score' ).html(value_target) ; 
+                                //alert( "computer wins" ) ; 
+                                
+                                comps.html( "Computer Wins" ) ; 
+                                $('#modalforcomputer').modal() ; 
+                                return true ; 
+                                
+                            }
+                            else{
+                                
+                                while( i<no ){
+                                
+                                    if( ar[ i ] - score >0 && ar[ i ] - score < 11 )break ; 
+                                    i++ ; 
+                                
+                                }
+                                if( i<no ){
+                                 
+                                    //alert( "computer adds "+( ar[ i ] - score ) ) ; 
+                                    comps.html("Computer adds "+( ar[ i ] - score )  ) ; 
+                                      $('.score' ).html(  ar[ i ] ) ; 
+                                }
+                                else{
+                                    
+                                    //alert( "computer adds 5 by default " ) ; 
+                                    comps.html( "Computer adds 5" ) ; 
+                                    $('.score' ).html( score + 5  ) ; 
+                                }
+                                
+                            }
+                        return false; 
+
+                    }
+                    
+                    
+                    
+                });
+                                             
+            </script>
+                                             
+                                             
+        </body>
+    </html>
+
+    
